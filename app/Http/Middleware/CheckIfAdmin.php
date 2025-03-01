@@ -59,7 +59,12 @@ class CheckIfAdmin
         if (Auth::check() && Auth::user()->role === 'admin') {
             return $next($request);
         }
-
-        abort(403, 'Sizda bu sahifaga kirish huquqi yo‘q.');
+        Auth::guard(backpack_guard_name())->logout();
+        // auth_back
+        return
+            redirect()
+                ->route('backpack.auth.login')
+                ->with('error', 'Sizda bu sahifaga kirish huquqi yo‘q.');
+        // abort(403, 'Sizda bu sahifaga kirish huquqi yo‘q.');
     }
 }
