@@ -56,7 +56,7 @@ class CheckIfAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->role === 'admin') {
+        if (Auth::guard(backpack_guard_name())->check() && Auth::guard(backpack_guard_name())->user()->role === 'admin') {
             return $next($request);
         }
         Auth::guard(backpack_guard_name())->logout();
